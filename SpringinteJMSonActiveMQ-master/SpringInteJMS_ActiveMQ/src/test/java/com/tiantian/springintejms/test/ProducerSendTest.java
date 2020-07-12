@@ -28,13 +28,13 @@ public class ProducerSendTest {
 		try {
 			connection = connectionFactory.createConnection();
 			connection.start();
-			//µÚÒ»¸ö²ÎÊýÊÇÊÇ·ñÊÇÊÂÎñÐÍÏûÏ¢£¬ÉèÖÃÎªtrue,µÚ¶þ¸ö²ÎÊýÎÞÐ§
-			//µÚ¶þ¸ö²ÎÊýÊÇ
-			//Session.AUTO_ACKNOWLEDGEÎª×Ô¶¯È·ÈÏ£¬¿Í»§¶Ë·¢ËÍºÍ½ÓÊÕÏûÏ¢²»ÐèÒª×ö¶îÍâµÄ¹¤×÷¡£Òì³£Ò²»áÈ·ÈÏÏûÏ¢£¬Ó¦¸ÃÊÇÔÚÖ´ÐÐÖ®Ç°È·ÈÏµÄ
-			//Session.CLIENT_ACKNOWLEDGEÎª¿Í»§¶ËÈ·ÈÏ¡£¿Í»§¶Ë½ÓÊÕµ½ÏûÏ¢ºó£¬±ØÐëµ÷ÓÃjavax.jms.MessageµÄacknowledge·½·¨¡£jms·þÎñÆ÷²Å»áÉ¾³ýÏûÏ¢¡£¿ÉÒÔÔÚÊ§°ÜµÄ
-			//Ê±ºò²»È·ÈÏÏûÏ¢,²»È·ÈÏµÄ»°²»»áÒÆ³ö¶ÓÁÐ£¬Ò»Ö±´æÔÚ£¬ÏÂ´ÎÆô¶¯¼ÌÐø½ÓÊÜ¡£½ÓÊÕÏûÏ¢µÄÁ¬½Ó²»¶Ï¿ª£¬ÆäËûµÄÏû·ÑÕßÒ²²»»á½ÓÊÜ£¨Õý³£Çé¿öÏÂ¶ÓÁÐÄ£Ê½²»´æÔÚÆäËûÏû·ÑÕß£©
-			//DUPS_OK_ACKNOWLEDGEÔÊÐí¸±±¾µÄÈ·ÈÏÄ£Ê½¡£Ò»µ©½ÓÊÕ·½Ó¦ÓÃ³ÌÐòµÄ·½·¨µ÷ÓÃ´Ó´¦ÀíÏûÏ¢´¦·µ»Ø£¬»á»°¶ÔÏó¾Í»áÈ·ÈÏÏûÏ¢µÄ½ÓÊÕ£»¶øÇÒÔÊÐíÖØ¸´È·ÈÏ¡£ÔÚÐèÒª¿¼ÂÇ×ÊÔ´Ê¹ÓÃÊ±£¬ÕâÖÖÄ£Ê½·Ç³£ÓÐÐ§¡£
-			//´ý²âÊÔ
+			//ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªtrue,ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
+			//ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//Session.AUTO_ACKNOWLEDGEÎªï¿½Ô¶ï¿½È·ï¿½Ï£ï¿½ï¿½Í»ï¿½ï¿½Ë·ï¿½ï¿½ÍºÍ½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£Ò²ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Ö®Ç°È·ï¿½Ïµï¿½
+			//Session.CLIENT_ACKNOWLEDGEÎªï¿½Í»ï¿½ï¿½ï¿½È·ï¿½Ï¡ï¿½ï¿½Í»ï¿½ï¿½Ë½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢ï¿½ó£¬±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½javax.jms.Messageï¿½ï¿½acknowledgeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jmsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½É¾ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê§ï¿½Üµï¿½
+			//Ê±ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½Ï¢,ï¿½ï¿½È·ï¿½ÏµÄ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ³ï¿½ï¿½ï¿½ï¿½Ð£ï¿½Ò»Ö±ï¿½ï¿½ï¿½Ú£ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½Ï¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶ï¿½ï¿½ï¿½Ä£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½
+			//DUPS_OK_ACKNOWLEDGEï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½Ä£Ê½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Õ·ï¿½Ó¦ï¿½Ã³ï¿½ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´Ó´ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ø£ï¿½ï¿½á»°ï¿½ï¿½ï¿½ï¿½Í»ï¿½È·ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ä½ï¿½ï¿½Õ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½È·ï¿½Ï¡ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ê¹ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£Ê½ï¿½Ç³ï¿½ï¿½ï¿½Ð§ï¿½ï¿½
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
 			destination_request = session.createQueue("request-queue");
 			destination_response = session.createQueue("response-queue");
@@ -42,7 +42,7 @@ public class ProducerSendTest {
 			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
 			consumer = session.createConsumer(destination_response);
-			//ÓÅÏÈ¼¶²»ÄÜÓ°ÏìÏÈ½øÏÈ³ö¡£¡£¡£ÄÇÕâ¸öÓÃ´¦¾¿¾¹ÊÇÊ²Ã´ÄØÄØÄØÄØ
+			//ï¿½ï¿½ï¿½È¼ï¿½ï¿½ï¿½ï¿½ï¿½Ó°ï¿½ï¿½ï¿½È½ï¿½ï¿½È³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			TestMqBean bean = new TestMqBean();
 			bean.setAge(13);
 			for (int i = 0; i < 10; i++) {
@@ -50,15 +50,14 @@ public class ProducerSendTest {
 				producer.send(session.createObjectMessage(bean));
 			}
 			producer.close();
-			System.out.println("ÏûÏ¢·¢ËÍ³É¹¦...");
+			System.out.println("ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Í³É¹ï¿½...");
 
 			consumer.setMessageListener(new MessageListener() {
-				@Override
 				public void onMessage(Message message) {
 					try {
 						if (null != message) {
 							TextMessage textMsg = (TextMessage) message;
-							System.out.println("ÊÕµ½»ØÀ¡ÏûÏ¢" +textMsg.getText());
+							System.out.println("ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢" +textMsg.getText());
 						}
 					} catch (Exception e) {
 						// TODO: handle exception

@@ -11,6 +11,16 @@
 
 	<context:component-scan base-package="com.tiantian" />
 
+	<!-- properties -->
+	<bean id="propertyConfigurer"
+		  class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<!-- 这个connectionFactory对应的是我们定义的Spring提供的那个ConnectionFactory对象 -->
@@ -21,7 +31,7 @@
 	
 	<!-- 真正可以产生Connection的ConnectionFactory，由对应的 JMS服务厂商提供-->
 	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="tcp://192.168.210.128:61616"/>
+		<property name="brokerURL" value="${active.mq.url}"/>
 	</bean>
 	
 	<!-- Spring用于管理真正的ConnectionFactory的ConnectionFactory -->
@@ -32,82 +42,82 @@
 	
 	<!--这个是队列目的地-->
 	<bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg>
-			<value>queue</value>
+		<constructor-arg index="0">
+			<value>tangyu_queue</value>
 		</constructor-arg>
 	</bean>
 	<!--这个是sessionAwareQueue目的地-->
-	<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
+	<!--<bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
 			<value>sessionAwareQueue</value>
 		</constructor-arg>
 	</bean>
-	<!-- 用于测试消息监听适配器的队列目的地 -->
+	&lt;!&ndash; 用于测试消息监听适配器的队列目的地 &ndash;&gt;
 	<bean id="adapterQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
 			<value>adapterQueue</value>
 		</constructor-arg>
 	</bean>
-	<!-- 用于测试消息回复的 -->
+	&lt;!&ndash; 用于测试消息回复的 &ndash;&gt;
 	<bean id="responseQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
 			<value>responseQueue</value>
 		</constructor-arg>
 	</bean>
-	<!-- 默认的消息回复队列 -->
+	&lt;!&ndash; 默认的消息回复队列 &ndash;&gt;
 	<bean id="defaultResponseQueue" class="org.apache.activemq.command.ActiveMQQueue">
 		<constructor-arg>
 			<value>defaultResponseQueue</value>
 		</constructor-arg>
 	</bean>
 
-	<!-- 消息监听器 -->
+	&lt;!&ndash; 消息监听器 &ndash;&gt;
 	<bean id="consumerMessageListener" class="com.tiantian.springintejms.listener.ConsumerMessageListener">
 		<property name="messageConverter" ref="emailMessageConverter"/>
 	</bean>
-	<!-- 可以获取session的MessageListener -->
+	&lt;!&ndash; 可以获取session的MessageListener &ndash;&gt;
 	<bean id="consumerSessionAwareMessageListener" class="com.tiantian.springintejms.listener.ConsumerSessionAwareMessageListener">
 		<property name="destination" ref="queueDestination"/>
 	</bean>
-	<!-- 消息监听适配器 -->
+	&lt;!&ndash; 消息监听适配器 &ndash;&gt;
 	<bean id="messageListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
-		<!-- <constructor-arg>
+		&lt;!&ndash; <constructor-arg>
 			<bean class="com.tiantian.springintejms.listener.ConsumerListener"/>
-		</constructor-arg> -->
+		</constructor-arg> &ndash;&gt;
 		<property name="delegate">
 			<bean class="com.tiantian.springintejms.listener.ConsumerListener"/>
 		</property>
 		<property name="defaultListenerMethod" value="receiveMessage"/>
 		<property name="defaultResponseDestination" ref="defaultResponseQueue"/>
-<!-- 		<property name="messageConverter" ref="emailMessageConverter"/> -->
+&lt;!&ndash; 		<property name="messageConverter" ref="emailMessageConverter"/> &ndash;&gt;
 		<property name="messageConverter">
 			<null/>
 		</property>
 	</bean>
-	<!-- responseQueue对应的监听器 -->
+	&lt;!&ndash; responseQueue对应的监听器 &ndash;&gt;
 	<bean id="responseQueueListener" class="com.tiantian.springintejms.listener.ResponseQueueListener"/>
-	<!-- defaultResponseQueue对应的监听器 -->
+	&lt;!&ndash; defaultResponseQueue对应的监听器 &ndash;&gt;
 	<bean id="defaultResponseQueueListener" class="com.tiantian.springintejms.listener.DefaultResponseQueueListener"/>
-	<!-- 消息监听适配器对应的监听容器 -->
+	&lt;!&ndash; 消息监听适配器对应的监听容器 &ndash;&gt;
 	<bean id="messageListenerAdapterContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory"/>
 		<property name="destination" ref="adapterQueue"/>
-		<property name="messageListener" ref="messageListenerAdapter"/><!-- 使用MessageListenerAdapter来作为消息监听器 -->
+		<property name="messageListener" ref="messageListenerAdapter"/>&lt;!&ndash; 使用MessageListenerAdapter来作为消息监听器 &ndash;&gt;
 	</bean>
-	<!-- responseQueue对应的监听容器 -->
+	&lt;!&ndash; responseQueue对应的监听容器 &ndash;&gt;
 	<bean id="responseQueueMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory"/>
 		<property name="destination" ref="responseQueue"/>
 		<property name="messageListener" ref="responseQueueListener"/>
 	</bean>
-	<!-- defaultResponseQueue对应的监听容器 -->
+	&lt;!&ndash; defaultResponseQueue对应的监听容器 &ndash;&gt;
 	<bean id="defaultResponseQueueMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory"/>
 		<property name="destination" ref="defaultResponseQueue"/>
 		<property name="messageListener" ref="defaultResponseQueueListener"/>
 	</bean>
-<!-- 	<bean id="topicListener" class="com.tiantian.springintejms.service.TopicConsumer"/> -->
-	<!-- 消息监听容器 -->
+&lt;!&ndash; 	<bean id="topicListener" class="com.tiantian.springintejms.service.TopicConsumer"/> &ndash;&gt;
+	&lt;!&ndash; 消息监听容器 &ndash;&gt;
 	<bean id="jmsContainer"
 		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
 		<property name="connectionFactory" ref="connectionFactory" />
@@ -121,7 +131,7 @@
 		<property name="destination" ref="sessionAwareQueue" />
 		<property name="messageListener" ref="consumerSessionAwareMessageListener" />
 	</bean>
-
+-->
 	<!-- 类型转换器 -->
 	<bean id="emailMessageConverter" class="com.tiantian.springintejms.converter.EmailMessageConverter"/>
 

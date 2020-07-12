@@ -18,22 +18,25 @@ import com.tiantian.springintejms.service.ProducerService;
 @Component
 public class ProducerServiceImpl implements ProducerService {
 
-	@Autowired
-	private JmsTemplate jmsTemplate;
-	@Autowired
-	@Qualifier("responseQueue")
-	private Destination responseDestination;
-	public void sendMessage(Destination destination, final String message) {
-		System.out.println("---------------Éú²úÕß·¢ËÍÏûÏ¢-----------------");
-		System.out.println("---------------Éú²úÕß·¢ÁËÒ»¸öÏûÏ¢£º" + message);
-		jmsTemplate.send(destination, new MessageCreator() {
-			public Message createMessage(Session session) throws JMSException {
-				return session.createTextMessage(message);
-			}
-		});
-	}
-	public void sendMessage(final Destination destination, final Serializable obj) {
-		jmsTemplate.convertAndSend(destination, obj);
-	}
-	
+    @Autowired
+    private JmsTemplate jmsTemplate;
+
+ /*   @Autowired
+    @Qualifier("responseQueue")
+    private Destination responseDestination;*/
+
+    public void sendMessage(Destination destination, final String message) {
+        System.out.println( "---------------å‘é€æ¶ˆæ¯----------------" );
+        System.out.println( "---------------æ¶ˆæ¯å†…å®¹ï¼š" + message );
+        jmsTemplate.send( destination, new MessageCreator() {
+            public Message createMessage(Session session) throws JMSException {
+                return session.createTextMessage( message );
+            }
+        });
+    }
+
+    public void sendMessage(final Destination destination, final Serializable obj) {
+        jmsTemplate.convertAndSend( destination, obj );
+    }
+
 }

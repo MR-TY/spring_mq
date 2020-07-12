@@ -13,23 +13,22 @@ public class TopicSubscriberTest {
 	private static String password = "admin";
 	private static String url = "tcp://192.168.210.128:61616";
 	public static void main(String[] args) throws Exception{
-		// ConnectionFactory £ºÁ¬½Ó¹¤³§£¬JMS ÓÃËü´´½¨Á¬½Ó
+		// ConnectionFactory ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½JMS ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user,password,url);
-		// Connection £ºJMS ¿Í»§¶Ëµ½JMS Provider µÄÁ¬½Ó
+		// Connection ï¿½ï¿½JMS ï¿½Í»ï¿½ï¿½Ëµï¿½JMS Provider ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Connection connection = connectionFactory.createConnection();
 		connection.start();
-		// Session£º Ò»¸ö·¢ËÍ»ò½ÓÊÕÏûÏ¢µÄÏß³Ì
+		// Sessionï¿½ï¿½ Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½
 		final Session session = connection.createSession(Boolean.TRUE, Session.AUTO_ACKNOWLEDGE);
-		// Destination £ºÏûÏ¢µÄÄ¿µÄµØ;ÏûÏ¢·¢ËÍ¸øË­.
+		// Destination ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ä¿ï¿½Äµï¿½;ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Í¸ï¿½Ë­.
 		Topic destination=session.createTopic("example.A");
-		// Ïû·ÑÕß£¬ÏûÏ¢½ÓÊÕÕß
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		MessageConsumer consumer = session.createConsumer(destination);
-		consumer.setMessageListener(new MessageListener(){//ÓÐÊÂÎñÏÞÖÆ
-			@Override
+		consumer.setMessageListener(new MessageListener(){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			public void onMessage(Message message) {
 				try {
 					TextMessage textMessage=(TextMessage)message;
-					System.out.println("½ÓÊÕµ½ÏûÏ¢£º"+textMessage.getText());
+					System.out.println("ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½"+textMessage.getText());
 				} catch (JMSException e1) {
 					e1.printStackTrace();
 				}

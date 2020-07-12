@@ -1,9 +1,12 @@
 package com.tiantian.springintejms.test;
 
 import com.tiantian.springintejms.entity.TestMqBean;
+import com.tiantian.springintejms.service.ConsumerService;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.jms.*;
@@ -12,29 +15,32 @@ import java.util.Date;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ConsumerReceiveTest {
 
+	@Value("${active.mq.url}")
+	private static String activeMqUrl;
+
 	@Test
 	public static void main(String[] args) {
 		ConnectionFactory connectionFactory;
-		// Connection £ºJMS ¿Í»§¶Ëµ½JMS Provider µÄÁ¬½Ó
+		// Connection ï¿½ï¿½JMS ï¿½Í»ï¿½ï¿½Ëµï¿½JMS Provider ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		Connection connection = null;
-		// Session£º Ò»¸ö·¢ËÍ»ò½ÓÊÕÏûÏ¢µÄÏß³Ì
+		// Sessionï¿½ï¿½ Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ß³ï¿½
 		final Session session;
-		// Destination £ºÏûÏ¢µÄÄ¿µÄµØ;ÏûÏ¢·¢ËÍ¸øË­.
+		// Destination ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ä¿ï¿½Äµï¿½;ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Í¸ï¿½Ë­.
 		Destination destination_request,destination_response;
-		// Ïû·ÑÕß£¬ÏûÏ¢½ÓÊÕÕß
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		MessageConsumer consumer;
-		//»Ø¸´½ÓÊÕµ½µÄÏûÏ¢
+		//ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
 		final MessageProducer producer;
-		connectionFactory = new ActiveMQConnectionFactory("admin", "admin", "tcp://192.168.210.128:61616");
+		connectionFactory = new ActiveMQConnectionFactory("admin", "admin", activeMqUrl);
 		try {
-			// ¹¹Ôì´Ó¹¤³§µÃµ½Á¬½Ó¶ÔÏó
+			// ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½Ó¶ï¿½ï¿½ï¿½
 			connection = connectionFactory.createConnection();
-			// Æô¶¯
+			// ï¿½ï¿½ï¿½ï¿½
 			connection.start();
-			// »ñÈ¡²Ù×÷Á¬½Ó
-			//Õâ¸ö×îºÃ»¹ÊÇÓÐÊÂÎñ
+			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			//ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			session = connection.createSession(Boolean.FALSE, Session.AUTO_ACKNOWLEDGE);
-			// »ñÈ¡session×¢Òâ²ÎÊýÖµxingbo.xu-queueÊÇÒ»¸ö·þÎñÆ÷µÄqueue£¬ÐëÔÚÔÚActiveMqµÄconsoleÅäÖÃ
+			// ï¿½ï¿½È¡session×¢ï¿½ï¿½ï¿½ï¿½ï¿½Öµxingbo.xu-queueï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½queueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ActiveMqï¿½ï¿½consoleï¿½ï¿½ï¿½ï¿½
 			destination_request = session.createQueue("request-queue");
 			destination_response = session.createQueue("response-queue");
 			consumer = session.createConsumer(destination_request);
@@ -43,14 +49,13 @@ public class ConsumerReceiveTest {
 			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
 			consumer.setMessageListener(new MessageListener() {
-				@Override
 				public void onMessage(Message message) {
 					try {
 						TestMqBean bean = (TestMqBean) ((ObjectMessage) message).getObject();
 						System.out.println(bean);
 						if (null != message) {
-							System.out.println("ÊÕµ½ÏûÏ¢" + bean.getName());
-							Message textMessage = session.createTextMessage("ÒÑ¾­³É¹¦ÊÕµ½ÏûÏ¢£¬ÏÖÔÚ¿ªÊ¼»Ø¸´"+new Date().toString());
+							System.out.println("ï¿½Õµï¿½ï¿½ï¿½Ï¢" + bean.getName());
+							Message textMessage = session.createTextMessage("ï¿½Ñ¾ï¿½ï¿½É¹ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½Ê¼ï¿½Ø¸ï¿½"+new Date().toString());
 							producer.send(textMessage);
 						}
 					} catch (Exception e) {

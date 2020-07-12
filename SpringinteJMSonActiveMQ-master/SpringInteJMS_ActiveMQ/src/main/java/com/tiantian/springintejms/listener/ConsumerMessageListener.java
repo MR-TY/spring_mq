@@ -18,11 +18,11 @@ public class ConsumerMessageListener implements MessageListener {
 	
 	public void onMessage(Message message) {
 		if (message instanceof TextMessage) {
-			//这里我们知道生产者发送的就是一个纯文本消息，所以这里可以直接进行强制转换，或者直接把onMessage方法的参数改成Message的子类TextMessage
+			//锟斤拷锟斤拷锟斤拷锟斤拷知锟斤拷锟斤拷锟斤拷锟竭凤拷锟酵的撅拷锟斤拷一锟斤拷锟斤拷锟侥憋拷锟斤拷息锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟街憋拷咏锟斤拷锟角匡拷锟阶拷锟斤拷锟斤拷锟斤拷锟街憋拷影锟給nMessage锟斤拷锟斤拷锟侥诧拷锟斤拷锟侥筹拷Message锟斤拷锟斤拷锟斤拷TextMessage
 			TextMessage textMsg = (TextMessage) message;
-			System.out.println("接收到一个纯文本消息。");
+			System.out.println("锟斤拷锟秸碉拷一锟斤拷锟斤拷锟侥憋拷锟斤拷息锟斤拷");
 			try {
-				System.out.println("消息内容是：" + textMsg.getText());
+				System.out.println("锟斤拷息锟斤拷锟斤拷锟角ｏ拷" + textMsg.getText());
 			} catch (JMSException e) {
 				e.printStackTrace();
 			}
@@ -34,7 +34,7 @@ public class ConsumerMessageListener implements MessageListener {
 				/*Object obj = objMessage.getObject();
 				Email email = (Email) obj;*/
 				Email email = (Email) messageConverter.fromMessage(objMessage);
-				System.out.println("接收到一个ObjectMessage，包含Email对象。");
+				System.out.println("锟斤拷锟秸碉拷一锟斤拷ObjectMessage锟斤拷锟斤拷锟斤拷Email锟斤拷锟斤拷");
 				System.out.println(email);
 			} catch (JMSException e) {
 				e.printStackTrace();

@@ -1,14 +1,17 @@
 package com.tiantian.springintejms.service.impl;
 
+import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.TextMessage;
 
 import com.tiantian.springintejms.service.ConsumerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jms.core.JmsTemplate;
 
 public class ConsumerServiceImpl implements ConsumerService {
 
 	public void receiveMessage(String message) throws JMSException {
-		System.out.println("------------------Ïû·ÑÕß½ÓÊÕÏûÏ¢-----------------");
-		System.out.println("-----------------Éú²úÕß·¢À´µÄÏûÏ¢ÊÇ£º" + message);
+		System.out.println("-----------------å¼€å§‹æ¥æ”¶æ¶ˆæ¯----------------");
+		System.out.println("-----------------æ¥æ”¶çš„æ¶ˆæ¯æ˜¯ï¼š" + message);
 	}
-
 }

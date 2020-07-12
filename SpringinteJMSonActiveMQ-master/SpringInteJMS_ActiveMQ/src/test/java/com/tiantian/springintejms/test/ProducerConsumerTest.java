@@ -18,36 +18,38 @@ public class ProducerConsumerTest {
 
 	@Autowired
 	private ProducerService producerService;
+
 	@Autowired
 	@Qualifier("queueDestination")
 	private Destination destination;
 	
-	@Autowired
+/*	@Autowired
 	@Qualifier("sessionAwareQueue")
 	private Destination sessionAwareQueue;
+
 	@Autowired
 	@Qualifier("adapterQueue")
-	private Destination adapterQueue;
-	
+	private Destination adapterQueue;*/
+
 	@Test
 	public void testSend() {
-		producerService.sendMessage(destination, "ÄãºÃ£¬Ïû·ÑÕß£¡");
+		producerService.sendMessage(destination, "ä½ å¥½å•Šå”å®‡-yuyuyutang");
 	}
 	
-	@Test
+	/*@Test
 	public void testSessionAwareMessageListener() {
-		producerService.sendMessage(sessionAwareQueue, "²âÊÔSessionAwareMessageListener");
+		producerService.sendMessage(sessionAwareQueue, "ï¿½ï¿½ï¿½ï¿½SessionAwareMessageListener");
 	}
 	
 	@Test
 	public void testMessageListenerAdapter() {
-		producerService.sendMessage(adapterQueue, "²âÊÔMessageListenerAdapter");
+		producerService.sendMessage(adapterQueue, "ï¿½ï¿½ï¿½ï¿½MessageListenerAdapter");
 	}
 	
 	@Test
 	public void testObjectMessage() {
-		Email email = new Email("zhangsan@xxx.com", "Ö÷Ìâ", "ÄÚÈİ");
+		Email email = new Email("zhangsan@xxx.com", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½");
 		producerService.sendMessage(adapterQueue, email);
-	}
+	}*/
 	
 }
