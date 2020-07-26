@@ -25,8 +25,17 @@ public class ConsumerCustomerServiceTest {
     @Qualifier("queueDestination")
     private Destination destination;
 
+    @Autowired
+    @Qualifier("topicDestination")
+    private Destination topicDestination;
+
     @Test
     public void testReceiveMessage(){
         consumerCustomrService.receiveMessage(destination);
+    }
+
+    @Test
+    public void testTopicReceiveMessage(){
+        consumerCustomrService.receiveTopciMessage();
     }
 }

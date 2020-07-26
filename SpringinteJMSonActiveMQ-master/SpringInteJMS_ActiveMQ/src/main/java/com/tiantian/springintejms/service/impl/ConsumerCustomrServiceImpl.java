@@ -22,4 +22,9 @@ public class ConsumerCustomrServiceImpl implements ConsumerCustomrService {
         String textMessage = (String) jmsTemplate.receiveAndConvert(destination);
         System.out.println( "消费者收到的消息："+textMessage );
     }
+
+    public void receiveTopciMessage() {
+        String textMessage = (String) jmsTemplate.receiveAndConvert();
+        System.out.println( "消费者收到的topic消息："+textMessage );
+    }
 }

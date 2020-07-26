@@ -22,6 +22,10 @@ public class ProducerConsumerTest {
 	@Autowired
 	@Qualifier("queueDestination")
 	private Destination destination;
+
+	@Autowired
+	@Qualifier("topicDestination")
+	private Destination topicDestination;
 	
 /*	@Autowired
 	@Qualifier("sessionAwareQueue")
@@ -35,7 +39,12 @@ public class ProducerConsumerTest {
 	public void testSend() {
 		producerService.sendMessage(destination, "你好啊唐宇-yuyuyutang");
 	}
-	
+
+	@Test
+	public void testSendTopic() {
+		producerService.sendMessage(topicDestination, "你好啊唐宇-0314");
+	}
+
 	/*@Test
 	public void testSessionAwareMessageListener() {
 		producerService.sendMessage(sessionAwareQueue, "����SessionAwareMessageListener");
